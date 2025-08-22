@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ขั้นตอนการสร้างโปรเจค Deep Learning</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+        }
+        
+        .goal-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .goal-section h2 {
+            border-left: 4px solid white;
+            color: white;
+        }
+        
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .toc h2 {
+            color: #2c3e50;
+            border-left: 4px solid #3498db;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+            border-bottom: 1px dotted #bdc3c7;
+        }
+        
+        .toc a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        .step-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .command-box {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .code-box {
+            background: #263238;
+            color: #eeff41;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .info-box {
+            background: #cce7ff;
+            border: 1px solid #99d3ff;
+            color: #004085;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .file-tree {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .tech-item {
+            background: #3498db;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .result-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #34495e;
+            color: white;
+            border-radius: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .command-box, .code-box {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="emoji">📋</span>ขั้นตอนการสร้างโปรเจค Deep Learning</h1>
+        
+        <div class="info-box">
+            <p><strong>เอกสารนี้อธิบายขั้นตอนการสร้างโปรเจค Deep Learning พร้อมข้อมูลตัวอย่าง CSV ตั้งแต่เริ่มต้นจนสำเร็จ</strong></p>
+        </div>
+
+        <div class="goal-section">
+            <h2><span class="emoji">🎯</span>เป้าหมาย</h2>
+            <ul>
+                <li>สร้างโปรเจค Deep Learning ที่สามารถทำ Regression และ Classification</li>
+                <li>สร้างข้อมูลตัวอย่าง CSV อัตโนมัติ</li>
+                <li>ฝึกโมเดล Neural Network และประเมินผล</li>
+                <li>บันทึกผลลัพธ์และ visualizations</li>
+                <li>อัปโหลดโปรเจคขึ้น GitHub</li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h2><span class="emoji">📋</span>สารบัญ</h2>
+            <ul>
+                <li><a href="#step1">1. การตั้งค่าโปรเจคเริ่มต้น</a></li>
+                <li><a href="#step2">2. การติดตั้ง Dependencies</a></li>
+                <li><a href="#step3">3. การสร้างโค้ด Deep Learning</a></li>
+                <li><a href="#step4">4. การสร้างไฟล์เสริม</a></li>
+                <li><a href="#step5">5. การทดสอบโปรแกรม</a></li>
+                <li><a href="#step6">6. การอัปโหลดขึ้น GitHub</a></li>
+                <li><a href="#step7">7. การใช้งานโปรเจค</a></li>
+            </ul>
+        </div>
+
+        <section id="step1">
+            <h2><span class="emoji">1️⃣</span>การตั้งค่าโปรเจคเริ่มต้น</h2>
+            
+            <div class="step-box">
+                <h3>1.1 สร้างโฟลเดอร์โปรเจค</h3>
+                <div class="command-box">
+mkdir basic-deep<br>
+cd basic-deep
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>1.2 เริ่มต้น Git Repository</h3>
+                <div class="command-box">
+git init<br>
+git branch -M main
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>1.3 สร้างไฟล์ .gitignore</h3>
+                <div class="command-box">
+echo "*.pyc<br>
+__pycache__/<br>
+.env<br>
+.venv/<br>
+.DS_Store<br>
+*.log" > .gitignore
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>1.4 สร้างไฟล์ pyproject.toml พื้นฐาน</h3>
+                <div class="code-box">
+[build-system]<br>
+requires = ["setuptools>=61.0"]<br>
+build-backend = "setuptools.build_meta"<br><br>
+
+[project]<br>
+name = "basic-deep"<br>
+version = "0.1.0"<br>
+description = "Basic Deep Learning Examples"
+                </div>
+            </div>
+        </section>
+
+        <section id="step2">
+            <h2><span class="emoji">2️⃣</span>การติดตั้ง Dependencies</h2>
+            
+            <div class="step-box">
+                <h3>2.1 ตั้งค่า Python Virtual Environment</h3>
+                <div class="command-box">
+python -m venv .venv<br>
+source .venv/bin/activate  # macOS/Linux<br>
+# หรือ .venv\Scripts\activate  # Windows
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>2.2 สร้างไฟล์ requirements.txt</h3>
+                <div class="code-box">
+tensorflow>=2.13.0<br>
+scikit-learn>=1.3.0<br>
+pandas>=2.0.0<br>
+numpy>=1.24.0<br>
+matplotlib>=3.7.0<br>
+seaborn>=0.12.0
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>2.3 ติดตั้ง packages</h3>
+                <div class="command-box">
+pip install -r requirements.txt
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-item">TensorFlow</span>
+                <span class="tech-item">Scikit-learn</span>
+                <span class="tech-item">Pandas</span>
+                <span class="tech-item">NumPy</span>
+                <span class="tech-item">Matplotlib</span>
+                <span class="tech-item">Seaborn</span>
+            </div>
+        </section>
+
+        <section id="step3">
+            <h2><span class="emoji">3️⃣</span>การสร้างโค้ด Deep Learning</h2>
+            
+            <div class="step-box">
+                <h3>3.1 สร้างไฟล์ main.py (จุดเริ่มต้น)</h3>
+                <div class="code-box">
+"""<br>
+Deep Learning Project Main Entry Point<br>
+จุดเริ่มต้นของโปรเจค Deep Learning<br>
+"""<br><br>
+
+def main():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("🚀 Welcome to Deep Learning Project!")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("=" * 40)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("Available examples:")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("1. Run: python run_example.py")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("2. Or: python deep_learning_example.py")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("-" * 40)<br><br>
+
+if __name__ == "__main__":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;main()
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>3.2 สร้างไฟล์ deep_learning_example.py (โค้ดหลัก)</h3>
+                
+                <h4><span class="emoji">🔹</span>ส่วนที่ 1: Import libraries และฟังก์ชันสร้างข้อมูล</h4>
+                <div class="code-box">
+import pandas as pd<br>
+import numpy as np<br>
+from sklearn.model_selection import train_test_split<br>
+from sklearn.preprocessing import StandardScaler<br>
+from sklearn.metrics import mean_squared_error, r2_score<br>
+import tensorflow as tf<br>
+from tensorflow import keras<br>
+from tensorflow.keras import layers<br>
+import matplotlib.pyplot as plt<br><br>
+
+def create_regression_dataset():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"""สร้างข้อมูลตัวอย่างสำหรับ regression problem"""<br>
+&nbsp;&nbsp;&nbsp;&nbsp;np.random.seed(42)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;n_samples = 1000<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# สร้างข้อมูล features และ target<br>
+&nbsp;&nbsp;&nbsp;&nbsp;# ... (รายละเอียดตามโค้ดเต็ม)
+                </div>
+                
+                <h4><span class="emoji">🔹</span>ส่วนที่ 2: ฟังก์ชันสร้างโมเดล</h4>
+                <div class="code-box">
+def build_regression_model(input_shape):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"""สร้าง neural network สำหรับ regression"""<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model = keras.Sequential([<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layers.Dense(64, activation='relu'),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layers.Dropout(0.2),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layers.Dense(32, activation='relu'),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;layers.Dense(1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return model
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>3.3 สร้างไฟล์ run_example.py (ไฟล์รันง่าย)</h3>
+                <div class="code-box">
+from deep_learning_example import main<br><br>
+
+def run_example():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;print("🎯 Starting Deep Learning Examples...")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;try:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;except Exception as e:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(f"❌ Error: {e}")<br><br>
+
+if __name__ == "__main__":<br>
+&nbsp;&nbsp;&nbsp;&nbsp;run_example()
+                </div>
+            </div>
+        </section>
+
+        <section id="step4">
+            <h2><span class="emoji">4️⃣</span>การสร้างไฟล์เสริม</h2>
+            
+            <div class="step-box">
+                <h3>4.1 สร้างไฟล์ README.md</h3>
+                <div class="info-box">
+                    <p>สร้างเอกสารอธิบายโปรเจค วิธีการติดตั้ง และการใช้งาน</p>
+                </div>
+                <div class="code-box">
+# Deep Learning Example Project<br><br>
+
+## 🚀 การเริ่มต้น<br>
+1. ติดตั้ง dependencies: `pip install -r requirements.txt`<br>
+2. รันตัวอย่าง: `python run_example.py`<br><br>
+
+## 📊 ไฟล์ที่จะถูกสร้าง<br>
+- house_price_dataset.csv<br>
+- weather_classification_dataset.csv<br>
+- โมเดล .h5 และกราฟผลลัพธ์
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>4.2 อัปเดต pyproject.toml</h3>
+                <div class="code-box">
+[project]<br>
+name = "basic-deep"<br>
+version = "0.1.0"<br>
+description = "Basic Deep Learning Examples"<br>
+dependencies = [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"tensorflow>=2.13.0",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"pandas>=2.0.0",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"numpy>=1.24.0"<br>
+]
+                </div>
+            </div>
+        </section>
+
+        <section id="step5">
+            <h2><span class="emoji">5️⃣</span>การทดสอบโปรแกรม</h2>
+            
+            <div class="step-box">
+                <h3>5.1 ตรวจสอบไฟล์</h3>
+                <div class="command-box">
+ls -la<br>
+# ควรเห็น: main.py, deep_learning_example.py, run_example.py
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>5.2 รันโปรแกรม</h3>
+                <div class="command-box">
+python main.py<br>
+python run_example.py
+                </div>
+                <div class="success-box">
+                    <strong>ผลลัพธ์ที่คาดหวัง:</strong>
+                    <ul>
+                        <li>สร้างไฟล์ CSV ข้อมูลตัวอย่าง</li>
+                        <li>ฝึกโมเดล Neural Network</li>
+                        <li>บันทึกโมเดลและกราฟผลลัพธ์</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>5.3 ตรวจสอบไฟล์ผลลัพธ์</h3>
+                <div class="command-box">
+ls -la *.csv *.h5 *.png
+                </div>
+                <div class="file-tree">
+basic-deep/<br>
+├── house_price_dataset.csv<br>
+├── weather_classification_dataset.csv<br>
+├── house_price_model.h5<br>
+├── weather_prediction_model.h5<br>
+├── regression_results.png<br>
+└── classification_results.png
+                </div>
+            </div>
+        </section>
+
+        <section id="step6">
+            <h2><span class="emoji">6️⃣</span>การอัปโหลดขึ้น GitHub</h2>
+            
+            <div class="step-box">
+                <h3>6.1 เตรียมไฟล์สำหรับ Git</h3>
+                <div class="command-box">
+git add .<br>
+git status
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>6.2 Commit การเปลี่ยนแปลง</h3>
+                <div class="command-box">
+git commit -m "Initial commit: Add deep learning examples"
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>6.3 สร้างและเชื่อมต่อ GitHub Repository</h3>
+                <div class="command-box">
+# สร้าง repo บน GitHub<br>
+git remote add origin https://github.com/USERNAME/basic-deep.git<br>
+git push -u origin main
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>6.4 Push ไฟล์ผลลัพธ์</h3>
+                <div class="command-box">
+git add *.csv *.h5 *.png<br>
+git commit -m "Add generated datasets and models"<br>
+git push
+                </div>
+                <div class="success-box">
+                    <strong>✅ สำเร็จ!</strong> โปรเจคถูกอัปโหลดขึ้น GitHub แล้ว
+                </div>
+            </div>
+        </section>
+
+        <section id="step7">
+            <h2><span class="emoji">7️⃣</span>การใช้งานโปรเจค</h2>
+            
+            <div class="step-box">
+                <h3>7.1 Clone Repository</h3>
+                <div class="command-box">
+git clone https://github.com/USERNAME/basic-deep.git<br>
+cd basic-deep
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>7.2 ตั้งค่า Environment</h3>
+                <div class="command-box">
+python -m venv .venv<br>
+source .venv/bin/activate<br>
+pip install -r requirements.txt
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>7.3 รันตัวอย่าง</h3>
+                <div class="command-box">
+python run_example.py
+                </div>
+            </div>
+            
+            <div class="step-box">
+                <h3>7.4 ดูผลลัพธ์</h3>
+                <ul>
+                    <li><span class="highlight">ไฟล์ CSV</span>: เปิดด้วย Excel หรือ text editor</li>
+                    <li><span class="highlight">ไฟล์ PNG</span>: เปิดดูกราฟผลลัพธ์</li>
+                    <li><span class="highlight">ไฟล์ H5</span>: โมเดลที่สามารถโหลดกลับมาใช้ได้</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="result-summary">
+            <h2><span class="emoji">🎯</span>สรุปผลลัพธ์</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                <div>
+                    <h3><span class="emoji">🏠</span>Regression Model</h3>
+                    <ul>
+                        <li>ทำนายราคาบ้าน</li>
+                        <li>ข้อมูล: 1,000 ตัวอย่าง</li>
+                        <li>Features: อายุ, รายได้, การศึกษา</li>
+                        <li>R² Score: ~54%</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3><span class="emoji">🌤️</span>Classification Model</h3>
+                    <ul>
+                        <li>ทำนายการเกิดฝน</li>
+                        <li>ข้อมูล: 1,000 ตัวอย่าง</li>
+                        <li>Features: อุณหภูมิ, ความชื้น</li>
+                        <li>Accuracy: ~71%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <h3><span class="emoji">🔧</span>การปรับแต่ง</h3>
+            <ul>
+                <li><strong>เปลี่ยนจำนวนข้อมูล:</strong> แก้ไขค่า <code>n_samples</code></li>
+                <li><strong>เปลี่ยน Architecture:</strong> แก้ไขฟังก์ชัน <code>build_*_model()</code></li>
+                <li><strong>เปลี่ยน Hyperparameters:</strong> แก้ไขค่า <code>epochs</code>, <code>batch_size</code></li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <h3><span class="emoji">🎉</span>สำเร็จแล้ว!</h3>
+            <p>ตอนนี้คุณมีโปรเจค Deep Learning ที่สมบูรณ์แล้ว</p>
+            <p>สามารถนำไปต่อยอดพัฒนาเป็นโปรเจคที่ซับซ้อนมากขึ้นได้</p>
+            <p><em>เอกสารนี้สร้างขึ้นเพื่อการศึกษาและเป็นแนวทางในการสร้างโปรเจค Deep Learning</em></p>
+        </div>
+    </div>
+</body>
+</html>
