@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>คู่มือใช้งาน uv เบื้องต้น (Quickstart)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.6; margin: 2rem auto; max-width: 860px; padding: 0 1rem; color: #1b1f23; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95em; }
+    pre { background: #f6f8fa; padding: 1rem; border-radius: 6px; overflow: auto; }
+    h1, h2, h3 { line-height: 1.25; }
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .note { background: #fff8c5; border-left: 4px solid #d4a72c; padding: 0.75rem 1rem; border-radius: 4px; }
+    .tip { background: #e6ffec; border-left: 4px solid #2da44e; padding: 0.75rem 1rem; border-radius: 4px; }
+    ul { padding-left: 1.25rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>คู่มือใช้งาน uv เบื้องต้น (Quickstart)</h1>
+    <p>สรุปขั้นตอนติดตั้งและใช้งานพื้นฐานของ uv อิงจากเอกสารทางการ <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">docs.astral.sh/uv</a> (โปรดดูเอกสารทางการสำหรับรายละเอียดครบถ้วน)</p>
+    <div class="note">uv คือเครื่องมือจัดการแพ็กเกจและโปรเจกต์ Python ที่รวดเร็วมาก รวมความสามารถของ pip/pip-tools/pipx/poetry/pyenv/virtualenv ไว้ในเครื่องมือเดียว</div>
+  </header>
+
+
+  <section>
+    <h2>สร้างและใช้งาน venv</h2>
+    <pre><code>uv venv                # สร้าง virtual environment (โฟลเดอร์ .venv)
+  <section>
+    <h2>ติดตั้ง uv</h2>
+    <p>macOS/Linux:</p>
+    <pre><code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></pre>
+    <p>หลังติดตั้ง แนะนำให้อ่านหน้า “First steps” และ “Installation” บนเว็บไซต์ทางการ</p>
+  </section>
+
+  <section>
+    <h2>คำสั่งพื้นฐาน</h2>
+    <ul>
+      <li><strong>uv init</strong>: สร้างโปรเจกต์ใหม่</li>
+      <li><strong>uv add / uv remove</strong>: เพิ่ม/ลบ dependencies</li>
+      <li><strong>uv run</strong>: รันคำสั่งหรือสคริปต์ในสภาพแวดล้อมของโปรเจกต์</li>
+      <li><strong>uv lock / uv sync</strong>: อัปเดต lockfile และซิงก์ environment</li>
+      <li><strong>uv venv</strong>: สร้าง virtual environment</li>
+    <div class="tip">เมื่อใช้ uv run / uv pip ไม่จำเป็นต้อง activate venv</div>
+  </section>
+      <li><strong>uv tool / uvx</strong>: รันและติดตั้ง CLI tools</li>
+      <li><strong>uv python</strong>: จัดการเวอร์ชัน Python</li>
+      <li><strong>uv pip</strong>: อินเทอร์เฟซที่เข้ากันได้กับ pip/pip-tools</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>เริ่มโปรเจกต์ใหม่</h2>
+    <pre><code>uv init myapp
+cd myapp
+uv add ruff
+uv run ruff --version
+uv lock
+uv sync</code></pre>
+    <div class="tip">uv จะสร้าง/ใช้ .venv ให้โดยอัตโนมัติเมื่อใช้ uv run / uv sync</div>
+  </section>
+
+  <section>
+    <h2>สคริปต์เดี่ยว (PEP 723)</h2>
+    <pre><code>echo 'import requests; print("ok", bool(requests))' &gt; script.py
+uv add --script script.py requests
+uv run script.py</code></pre>
+  </section>
+
+  <section>
+    <h2>เครื่องมือ (Tools)</h2>
+    <pre><code>uvx pycowsay 'hello world'
+uv tool install ruff
+ruff --version</code></pre>
+  </section>
+
+  <section>
+    <h2>จัดการ Python เวอร์ชัน</h2>
+    <pre><code>uv python install 3.10 3.11 3.12
+uv venv --python 3.12.0
+uv python pin 3.11</code></pre>
+  </section>
+
+  <section>
+    <h2>อินเทอร์เฟซสไตล์ pip</h2>
+    <pre><code>uv pip compile requirements.in --universal -o requirements.txt
+uv venv
+uv pip sync requirements.txt
+uv pip install requests
+uv pip uninstall requests</code></pre>
+  </section>
+
+  <section>
+    <h2>ลิงก์อ้างอิง</h2>
+    <ul>
+      <li><a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">หน้าแรก uv</a></li>
+      <li><a href="https://docs.astral.sh/uv/getting-started/" target="_blank" rel="noopener">Getting started</a></li>
+      <li><a href="https://docs.astral.sh/uv/reference/cli/" target="_blank" rel="noopener">CLI Reference</a></li>
+      <li><a href="https://docs.astral.sh/uv/pip/" target="_blank" rel="noopener">pip interface</a></li>
+      <li><a href="https://docs.astral.sh/uv/guides/" target="_blank" rel="noopener">Guides</a></li>
+    </ul>
+    <p style="font-size: 0.9em; color: #57606a;">ข้อมูลอาจเปลี่ยนแปลงตามเวอร์ชันของ uv โปรดตรวจสอบเอกสารทางการ</p>
+  </section>
+</body>
+</html>
