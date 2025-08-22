@@ -1,5 +1,5 @@
 def main():
-    print("Hello from basic-deep!")
+    print("Hello from deep learning!")
 
 
 if __name__ == "__main__":
